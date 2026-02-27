@@ -17,11 +17,10 @@ messagesRouter.post('/', imagesUpload.single('image'), async (req, res) => {
     }
 
     const messageData: MessageMutation = {
-        author: req.body.author ? req.body.author.trim() : '',
+        author: req.body.author ? req.body.author.trim() : 'Anonymous',
         message: req.body.message.trim(),
-        image: req.file ? req.file.filename : null,
+        image: req.file ? 'images/' + req.file.filename : null,
     };
-
     const savedMessage = await fileDb.addMessage(messageData);
     res.send(savedMessage);
 });

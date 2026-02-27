@@ -16,12 +16,15 @@ const MessageForm = () => {
         image: null,
     });
 
+    const [fileInputKey, setFileInputKey] = useState(Date.now());
+
     const submitFormHandler = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!state.message.trim()) return;
 
         await dispatch(createMessage(state));
         setState({ author: '', message: '', image: null });
+        setFileInputKey(Date.now());
         await dispatch(fetchMessages());
     };
 
@@ -70,6 +73,7 @@ const MessageForm = () => {
                 </Grid>
                 <Grid size={{ xs: 12 }}>
                     <FileInput
+                        key={fileInputKey}
                         label="Image"
                         name="image"
                         onChange={fileInputChangeHandler}
